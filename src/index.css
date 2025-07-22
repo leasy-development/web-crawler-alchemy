@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Builder.io styles */
+@import './styles/builder/components.css';
+@import './styles/builder/animations.css';
+
 /* AI Scraper Design System - Premium SaaS Application */
 
 @layer base {

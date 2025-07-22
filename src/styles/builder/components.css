@@ -1,0 +1,75 @@
+
+/* Builder.io Component Styles */
+
+.builder-component {
+  @apply w-full;
+}
+
+/* Hero Section Styles */
+.builder-hero {
+  @apply relative min-h-screen;
+}
+
+.builder-hero .text-gradient {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Features Section Styles */
+.builder-features {
+  @apply py-24;
+}
+
+.builder-features .feature-card {
+  @apply glass p-8 rounded-xl hover:scale-105 transition-all duration-300;
+}
+
+/* Pricing Section Styles */
+.builder-pricing {
+  @apply py-24;
+}
+
+.builder-pricing .pricing-card {
+  @apply glass p-8 rounded-xl border-2 border-transparent hover:border-primary/50 transition-all duration-300;
+}
+
+/* Form Styles */
+.builder-form {
+  @apply space-y-6;
+}
+
+.builder-form input,
+.builder-form textarea {
+  @apply w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary;
+}
+
+.builder-form button {
+  @apply btn-gradient px-8 py-3 rounded-lg font-semibold;
+}
+
+/* Animation Classes for Builder.io */
+.builder-fade-in {
+  @apply animate-fade-in;
+}
+
+.builder-scale-in {
+  @apply animate-scale-in;
+}
+
+.builder-slide-in {
+  @apply animate-slide-in-right;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .builder-hero {
+    @apply min-h-[80vh];
+  }
+  
+  .builder-hero h1 {
+    @apply text-4xl;
+  }
+}

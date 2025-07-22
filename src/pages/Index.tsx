@@ -1,22 +1,26 @@
+
 import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
-import { Features } from "@/components/Features";
-import { Pricing } from "@/components/Pricing";
+import { BuilderLandingPage } from "@/components/builder/pages/BuilderLandingPage";
 import { Footer } from "@/components/Footer";
+import { useBuilderContent } from "@/hooks/useBuilderContent";
 
 const Index = () => {
+  const { content, isLoading } = useBuilderContent();
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main>
-        <Hero />
-        <div id="features">
-          <Features />
+      {isLoading ? (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </div>
-        <div id="pricing">
-          <Pricing />
-        </div>
-      </main>
+      ) : (
+        <BuilderLandingPage
+          heroContent={content.hero}
+          featuresContent={content.features}
+          pricingContent={content.pricing}
+        />
+      )}
       <Footer />
     </div>
   );

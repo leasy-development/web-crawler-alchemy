@@ -1,0 +1,48 @@
+
+/* Builder.io Specific Animations */
+
+@keyframes builder-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes builder-glow {
+  0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+  50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.6); }
+}
+
+@keyframes builder-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.builder-float {
+  animation: builder-float 6s ease-in-out infinite;
+}
+
+.builder-glow {
+  animation: builder-glow 2s ease-in-out infinite alternate;
+}
+
+.builder-gradient-bg {
+  background: linear-gradient(-45deg, #1e3a8a, #7c3aed, #0891b2, #1e40af);
+  background-size: 400% 400%;
+  animation: builder-gradient-shift 15s ease infinite;
+}
+
+/* Stagger animation delays for lists */
+.builder-stagger-1 { animation-delay: 0.1s; }
+.builder-stagger-2 { animation-delay: 0.2s; }
+.builder-stagger-3 { animation-delay: 0.3s; }
+.builder-stagger-4 { animation-delay: 0.4s; }
+.builder-stagger-5 { animation-delay: 0.5s; }
+
+/* Hover effects for Builder.io elements */
+.builder-hover-lift {
+  @apply transition-transform duration-300 hover:-translate-y-2;
+}
+
+.builder-hover-glow {
+  @apply transition-all duration-300 hover:shadow-lg hover:shadow-primary/25;
+}
