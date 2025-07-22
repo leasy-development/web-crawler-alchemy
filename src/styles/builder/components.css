@@ -2,74 +2,210 @@
 /* Builder.io Component Styles */
 
 .builder-component {
-  @apply w-full;
+  /* Ensure Builder.io content inherits theme variables */
+  color: hsl(var(--foreground));
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* Hero Section Styles */
+.builder-component * {
+  /* Override any hardcoded styles with theme variables */
+  transition: all 0.3s ease;
+}
+
+/* Responsive utilities for Builder.io content */
+.responsive-builder {
+  max-width: 100%;
+  height: auto;
+}
+
+.responsive-builder img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.responsive-builder video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Builder.io specific overrides */
 .builder-hero {
-  @apply relative min-h-screen;
+  min-height: 60vh;
 }
 
-.builder-hero .text-gradient {
+.builder-hero h1,
+.builder-hero h2,
+.builder-hero h3 {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+}
+
+.builder-hero .gradient-text {
   background: var(--gradient-hero);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Features Section Styles */
 .builder-features {
-  @apply py-24;
+  padding: 4rem 1rem;
 }
 
 .builder-features .feature-card {
-  @apply glass p-8 rounded-xl hover:scale-105 transition-all duration-300;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Pricing Section Styles */
+.builder-features .feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+}
+
 .builder-pricing {
-  @apply py-24;
+  padding: 4rem 1rem;
 }
 
 .builder-pricing .pricing-card {
-  @apply glass p-8 rounded-xl border-2 border-transparent hover:border-primary/50 transition-all duration-300;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
 }
 
-/* Form Styles */
-.builder-form {
-  @apply space-y-6;
+.builder-pricing .pricing-card.featured {
+  border-color: hsl(var(--primary));
+  box-shadow: var(--shadow-glow);
 }
 
-.builder-form input,
-.builder-form textarea {
-  @apply w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground;
-  @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary;
+/* Animation integration */
+.builder-component [data-builder-animate="fade-in"] {
+  animation: fade-in 0.6s ease-out;
 }
 
-.builder-form button {
-  @apply btn-gradient px-8 py-3 rounded-lg font-semibold;
+.builder-component [data-builder-animate="slide-up"] {
+  animation: fade-in-up 0.6s ease-out;
 }
 
-/* Animation Classes for Builder.io */
-.builder-fade-in {
-  @apply animate-fade-in;
+.builder-component [data-builder-animate="scale-in"] {
+  animation: scale-in 0.3s ease-out;
 }
 
-.builder-scale-in {
-  @apply animate-scale-in;
+/* Button styling for Builder.io buttons */
+.builder-component button,
+.builder-component .btn {
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
 }
 
-.builder-slide-in {
-  @apply animate-slide-in-right;
+.builder-component .btn-primary {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--primary));
 }
 
-/* Responsive Utilities */
-@media (max-width: 768px) {
-  .builder-hero {
-    @apply min-h-[80vh];
+.builder-component .btn-primary:hover {
+  background: hsl(var(--primary) / 0.9);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.builder-component .btn-secondary {
+  background: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  border: 1px solid hsl(var(--secondary));
+}
+
+.builder-component .btn-outline {
+  background: transparent;
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+}
+
+.builder-component .btn-outline:hover {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+/* Form styling */
+.builder-component input,
+.builder-component textarea,
+.builder-component select {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--foreground));
+  border-radius: calc(var(--radius) - 2px);
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+}
+
+.builder-component input:focus,
+.builder-component textarea:focus,
+.builder-component select:focus {
+  outline: none;
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+  .builder-component {
+    color-scheme: dark;
+  }
+}
+
+/* Print styles */
+@media print {
+  .builder-component {
+    color: black !important;
+    background: white !important;
   }
   
-  .builder-hero h1 {
-    @apply text-4xl;
+  .builder-component * {
+    color: inherit !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
+}
+
+/* Loading states */
+.builder-component[data-builder-loaded="false"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.builder-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .builder-hero {
+    min-height: 50vh;
+    padding: 2rem 1rem;
+  }
+  
+  .builder-features,
+  .builder-pricing {
+    padding: 2rem 1rem;
+  }
+  
+  .builder-component .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Performance optimizations */
+.builder-component img[loading="lazy"],
+.builder-component iframe[loading="lazy"] {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
 }
