@@ -113,7 +113,7 @@ export function EnhancedCrawlerList() {
     }
   };
 
-  const bulkUpdateStatus = async (status: string) => {
+  const bulkUpdateStatus = async (status: Crawler['status']) => {
     if (selectedCrawlers.size === 0) return;
 
     try {

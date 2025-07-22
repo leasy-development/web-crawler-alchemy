@@ -12,7 +12,7 @@ import { Signup } from "./pages/Signup";
 import { Dashboard } from "./pages/Dashboard";
 import { DashboardCrawlers } from "./pages/DashboardCrawlers";
 import { CrawlerForm } from "./pages/CrawlerForm";
-import { NotFound } from "./pages/NotFound";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
