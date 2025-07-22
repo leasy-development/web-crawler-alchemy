@@ -1,27 +1,28 @@
 
-import { Navigation } from "@/components/Navigation";
-import { BuilderLandingPage } from "@/components/builder/pages/BuilderLandingPage";
-import { Footer } from "@/components/Footer";
-import { useBuilderContent } from "@/hooks/useBuilderContent";
+import { StickyNavigation } from "@/components/sections/StickyNavigation";
+import { EnhancedHero } from "@/components/sections/EnhancedHero";
+import { Features } from "@/components/Features";
+import { ProductShowcase } from "@/components/sections/ProductShowcase";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { Pricing } from "@/components/Pricing";
+import { EnhancedFooter } from "@/components/sections/EnhancedFooter";
 
 const Index = () => {
-  const { content, isLoading } = useBuilderContent();
-
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      {isLoading ? (
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-        </div>
-      ) : (
-        <BuilderLandingPage
-          heroContent={content.hero}
-          featuresContent={content.features}
-          pricingContent={content.pricing}
-        />
-      )}
-      <Footer />
+    <div className="min-h-screen">
+      <StickyNavigation />
+      <EnhancedHero />
+      <div id="features">
+        <Features />
+      </div>
+      <ProductShowcase />
+      <div id="testimonials">
+        <TestimonialsSection />
+      </div>
+      <div id="pricing">
+        <Pricing />
+      </div>
+      <EnhancedFooter />
     </div>
   );
 };
