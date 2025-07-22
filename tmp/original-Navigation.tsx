@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/contexts/AuthContext";
+import { LoginModal } from "@/components/auth/LoginModal";
+import { UserDropdown } from "@/components/auth/UserDropdown";
+import { NotificationCenter } from "@/components/notifications/NotificationCenter";
 import { Moon, Sun, Menu, X, Sparkles, Github, LogIn } from "lucide-react";
 
 export function Navigation() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  const { user } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     // Initialize dark mode based on system preference or stored value
@@ -92,27 +96,27 @@ export function Navigation() {
               <Github className="w-5 h-5" />
             </Button>
 
-            {user ? (
-              <Button asChild className="btn-gradient">
-                <Link to="/dashboard">Dashboard</Link>
-              </Button>
-            ) : (
-              <>
-                <Button asChild variant="ghost" className="hover-glow">
-                  <Link to="/login">
-                    <LogIn className="w-4 h-4 mr-2" />
-                    Sign In
-                  </Link>
+            {!isLoading && isAuthenticated && <NotificationCenter />}
+
+            {!isLoading &&
+              (isAuthenticated ? (
+                <UserDropdown />
+              ) : (
+                <Button
+                  variant="ghost"
+                  onClick={() => setIsLoginModalOpen(true)}
+                  className="hover-glow"
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Sign In
                 </Button>
-                <Button asChild className="btn-gradient">
-                  <Link to="/signup">Get Started</Link>
-                </Button>
-              </>
-            )}
+              ))}
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
+            {!isLoading && isAuthenticated && <NotificationCenter />}
+
             <Button
               variant="ghost"
               size="icon"
@@ -154,47 +158,45 @@ export function Navigation() {
                   {item.label}
                 </a>
               ))}
-              
-              <div className="space-y-2 px-3 py-2">
-                {user ? (
-                  <Button asChild className="w-full btn-gradient">
-                    <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                      Dashboard
-                    </Link>
-                  </Button>
+              {!isLoading &&
+                (isAuthenticated ? (
+                  <div className="px-3 py-2">
+                    <UserDropdown />
+                  </div>
                 ) : (
-                  <>
+                  <div className="space-y-2 px-3 py-2">
                     <Button
-                      asChild
                       variant="ghost"
                       className="w-full justify-start hover-glow"
+                      onClick={() => {
+                        setIsLoginModalOpen(true);
+                        setIsMobileMenuOpen(false);
+                      }}
                     >
-                      <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                        <LogIn className="w-4 h-4 mr-2" />
-                        Sign In
-                      </Link>
+                      <LogIn className="w-4 h-4 mr-2" />
+                      Sign In
                     </Button>
-                    <Button asChild className="w-full btn-gradient">
-                      <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                        Get Started
-                      </Link>
-                    </Button>
-                  </>
-                )}
-                <div className="flex justify-center pt-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="hover-glow"
-                  >
-                    <Github className="w-5 h-5" />
-                  </Button>
-                </div>
-              </div>
+                    <div className="flex justify-center pt-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="hover-glow"
+                      >
+                        <Github className="w-5 h-5" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         )}
       </div>
+
+      {/* Authentication Modals */}
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
     </nav>
   );
 }
