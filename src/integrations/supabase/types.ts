@@ -14,7 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      crawlers: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          name: string
+          status: Database["public"]["Enums"]["crawler_status"]
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          name: string
+          status?: Database["public"]["Enums"]["crawler_status"]
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          name?: string
+          status?: Database["public"]["Enums"]["crawler_status"]
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +82,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      crawler_status:
+        | "Todo"
+        | "In Progress"
+        | "Ready for QA"
+        | "Completed"
+        | "Failed"
+      user_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +215,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      crawler_status: [
+        "Todo",
+        "In Progress",
+        "Ready for QA",
+        "Completed",
+        "Failed",
+      ],
+      user_role: ["admin"],
+    },
   },
 } as const

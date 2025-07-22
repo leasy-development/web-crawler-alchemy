@@ -1,20 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Login = () => {
+  const navigate = useNavigate();
+  const { signIn, user } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempt:", { email, password });
-    // TODO: Implement actual login logic with Supabase
+    setLoading(true);
+    
+    const { error } = await signIn(email, password);
+    
+    if (!error) {
+      navigate('/dashboard');
+    }
+    
+    setLoading(false);
   };
 
   return (
@@ -105,7 +122,10 @@ export const Login = () => {
             </div>
             
             {/* Submit button */}
-            <Button type="submit" variant="gradient" size="lg" className="w-full">
+            <Button type="submit" variant="gradient" size="lg" className="w-full" disabled={loading}>
+              {loading ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              ) : null}
               Sign In
             </Button>
           </form>

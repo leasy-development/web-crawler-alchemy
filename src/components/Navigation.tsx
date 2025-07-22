@@ -46,6 +46,9 @@ export const Navigation = () => {
             <Link to="/signup">
               <Button variant="gradient">Get Started</Button>
             </Link>
+            <Link to="/dashboard">
+              <Button variant="outline">Dashboard</Button>
+            </Link>
           </div>
           
           {/* Mobile menu button */}
@@ -82,6 +85,11 @@ export const Navigation = () => {
                 <Link to="/signup" onClick={() => setIsOpen(false)}>
                   <Button variant="gradient" className="w-full">
                     Get Started
+                  </Button>
+                </Link>
+                <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                  <Button variant="outline" className="w-full">
+                    Dashboard
                   </Button>
                 </Link>
               </div>

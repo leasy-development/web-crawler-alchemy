@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/components/ui/use-toast";
 
 export const Signup = () => {
+  const navigate = useNavigate();
+  const { signUp, user } = useAuth();
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,10 +21,45 @@ export const Signup = () => {
     confirmPassword: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Signup attempt:", formData);
-    // TODO: Implement actual signup logic with Supabase
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 6 characters",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    
+    const { error } = await signUp(formData.email, formData.password);
+    
+    if (!error) {
+      toast({
+        title: "Account created!",
+        description: "Please check your email to verify your account.",
+      });
+    }
+    
+    setLoading(false);
   };
 
   const handleChange = (field: string, value: string) => {
@@ -147,7 +188,10 @@ export const Signup = () => {
             </div>
             
             {/* Submit button */}
-            <Button type="submit" variant="gradient" size="lg" className="w-full">
+            <Button type="submit" variant="gradient" size="lg" className="w-full" disabled={loading}>
+              {loading ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              ) : null}
               Create Account
             </Button>
           </form>

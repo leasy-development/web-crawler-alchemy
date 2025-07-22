@@ -43,6 +43,9 @@ export const Hero = () => {
               Start Scraping Free
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
+            <Button variant="outline" size="xl">
+              View Dashboard
+            </Button>
             <Button variant="glass" size="xl">
               Watch Demo
             </Button>
