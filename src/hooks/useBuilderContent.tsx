@@ -72,7 +72,7 @@ export function useBuilderContent(): UseBuilderContentReturn {
     }
   }, [previewMode]);
 
-  const processBuilderContent = async (htmlContent: string, componentName: string): Promise<string> => {
+  const processBuilderContent = async (htmlContent: string, componentName: keyof BuilderContent): Promise<string> => {
     let processedContent = htmlContent;
     
     // Inject theme variables
